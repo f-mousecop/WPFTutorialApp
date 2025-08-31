@@ -3,33 +3,75 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Names" Height="380" Width="520">
-    <Grid Name="pnlMainGrid" MouseUp="pnlMainGrid_MouseUp" Background="LightBlue" Margin="10">
+        Title="Names" Height="700" Width="520"
+        Background="{DynamicResource WindowBackgroundBrush}">
+    <Window.Resources>
+        <sys:String x:Key="strWindow">Hello, Window</sys:String>
+    </Window.Resources>
+
+    <Grid Name="pnlMainGrid" MouseUp="pnlMainGrid_MouseUp" Background="LightBlue" Margin="0">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Label>Names</Label>
-        <ListBox Grid.Row="1" x:Name="lstNames" />
-        <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
-            <TextBox x:Name="txtName" />
-            <Button x:Name="btnAdd" Margin="0,5,0,0" Click="ButtonAddName_Click">Add Name</Button>
-            <Button FontWeight="Bold">
+        <Label Content="Names"></Label>
+        <Label Name="lblDate" HorizontalAlignment="Right"/>
+        <!--<ListBox Grid.Row="1" x:Name="lstNames" Margin="5,0,5,0" />-->
+        <TextBox Grid.Row="1" x:Name="lstNames" Margin="5,0,5,0" TextWrapping="Wrap" IsReadOnly="True" />
+        <StackPanel Grid.Row="2" Margin="5,0,5,0">
+            <TextBox x:Name="txtName" Height="60" TextWrapping="Wrap" Margin="0,5,0,0"/>
+            <Button x:Name="btnAdd" Margin="0,5,0,0" Click="ButtonAddName_Click">Send</Button>
+            <Button x:Name="btnExcTest" Click="BtnExcTest_Click" FontWeight="Bold">
                 <WrapPanel>
                     <TextBlock Foreground="Blue">Multi</TextBlock>
                     <TextBlock Foreground="Red">Color</TextBlock>
                     <TextBlock>Button</TextBlock>
                 </WrapPanel>
             </Button>
+            <ComboBox>
+                <ComboBoxItem>Item 1</ComboBoxItem>
+                <ComboBoxItem>Item 2</ComboBoxItem>
+                <ComboBoxItem>Item 3</ComboBoxItem>
+            </ComboBox>
+            <Button x:Name="btnLogin" Click="BtnLogin_Click">Login</Button>
         </StackPanel>
+
+        <DockPanel Margin="10" Name="pnlMain" Grid.Row="3" Background="DimGray" >
+            <DockPanel.Resources>
+                <sys:String x:Key="strPanel">Hello, panel world</sys:String>
+            </DockPanel.Resources>
+
+            <WrapPanel DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="10">
+                <Button Name="btnClickMe" Click="BtnClickMe_Click">Click me!</Button>
+            </WrapPanel>
+            <ListBox Name="lbResult" />
+        </DockPanel>
+
+        <DockPanel Grid.Row="4">
+            <ListBox x:Name="MessagesList" ItemsSource="{Binding Messages}" DockPanel.Dock="Top" Margin="5" Background="White" Height="100">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap" Margin="5" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="5">
+                <TextBox x:Name="UserInput" Width="380" Height="80" Margin="0,0,5,0" TextWrapping="Wrap"/>
+                <Button Content="Send" x:Name="SendButton" Width="80" Height="80" Click="SendButton_Click" Margin="20,0,0,0"/>
+            </StackPanel>
+        </DockPanel>
     </Grid>
 </Window>
